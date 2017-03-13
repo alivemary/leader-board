@@ -1,0 +1,21 @@
+$odd-color: #fff;
+$even-color: #eee;
+$table-background-color: lightgrey;
+$table-border: 1px solid darkgrey;
+
+table {
+    border-collapse: collapse;
+		th {
+			background-color: $table-background-color;
+			text-align: center;
+		}
+		td, th {
+	    border: $table-border;
+	  }
+		tr:nth-child(even) {
+	    background-color: $even-color;
+	  }
+	  tr:nth-child(odd) {
+	    background-color: $odd-color;
+	  }
+}
