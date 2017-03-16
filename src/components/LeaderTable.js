@@ -4,12 +4,16 @@ import Fetch from 'react-fetch';
 import FaSortDesc from './sort-desc';
 import CamperList from './CamperList';
 
+const FIRST_COLUMN = 1;
+const SECOND_COLUMN = 2;
+
 export default class LeaderTable extends React.Component {
 	constructor (props) {
 		super (props);
 		this.state = {
       campers: [],
-			sorted: true
+			column: FIRST_COLUMN,
+			requestFailed: false
     };
 		this.handleClick1 = this.handleClick1.bind(this);
 		this.handleClick2 = this.handleClick2.bind(this);
@@ -17,25 +21,27 @@ export default class LeaderTable extends React.Component {
 	getCampersList(url){
 		var that = this;
 		fetch(url)
-  		.then(function(response) {
+  		.then(response => {
     		if (response.status >= 400) {
       		throw new Error("Bad response from server");
     		}
     		return response.json();
   		})
-  		.then(function(data) {
-    		that.setState({ campers: data });
-  		});
+  		.then(data => {
+    		that.setState({campers: data, requestFailed: false});
+  		}, () => {
+				that.setState({requestFailed: true});
+			});
 	}
 	handleClick1(e){
 		e.preventDefault();
 	 	this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/recent');
-		this.setState({sorted: true});
+		this.setState({column: FIRST_COLUMN});
 	}
 	handleClick2(e){
 		e.preventDefault();
 	 	this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/alltime');
-		this.setState({sorted: false});
+		this.setState({column: SECOND_COLUMN});
 	}
 	componentDidMount(){
 		this.getCampersList('https://fcctop100.herokuapp.com/api/fccusers/top/recent');
@@ -62,23 +68,24 @@ export default class LeaderTable extends React.Component {
 		let title2 = "All time points  ";
 		let descSign1='', descSign2='';
 
-		if (this.state.sorted)	{
+		if (this.state.column === FIRST_COLUMN)	{
 			descSign1=descSign;
 		}
 		else {
 			descSign2=descSign;
 		}
-
+		if (this.state.requestFailed) return <p>Failed!</p>;
+		if (!this.state.campers) return <p>Loading...</p>
 		return (
 		<table style={style}>
           <thead>
             <tr>
             	<th>#</th>
             	<th style={styleLeft}>Camper Name</th>
-            	<th style={(this.state.sorted) ? styleSorted : {}} onClick={this.handleClick1}>
+            	<th style={(this.state.column === FIRST_COLUMN) ? styleSorted : {}} onClick={this.handleClick1}>
 							{title1}{descSign1}
 							</th>
-							<th style={(!this.state.sorted) ? styleSorted : {}} onClick={this.handleClick2}>
+							<th style={(this.state.column === SECOND_COLUMN) ? styleSorted : {}} onClick={this.handleClick2}>
 							{title2}{descSign2}
 							</th>
             </tr>
