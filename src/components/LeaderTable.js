@@ -48,22 +48,7 @@ export default class LeaderTable extends React.Component {
 	}
 
 	render () {
-		var style = {
-      		fontSize: 20,
-      		border: '1px black solid',
-      		width: '80%',
-      		marginLeft: 'auto',
-      		marginRight: 'auto',
-      		marginTop: '20px'
-    	};
-
-		let styleLeft = {
-					textAlign: 'left'
-		}
-		let styleSorted = {
-				color: "blue"
-		}
-		let descSign =<FaSortDesc style={{verticalAlign: 'none'}} />;
+		let descSign =<FaSortDesc style={{verticalAlign: 'none'}}/>;
 		let title1 = "Points in past 30 days  ";
 		let title2 = "All time points  ";
 		let descSign1='', descSign2='';
@@ -77,15 +62,15 @@ export default class LeaderTable extends React.Component {
 		if (this.state.requestFailed) return <p>Failed!</p>;
 		if (!this.state.campers) return <p>Loading...</p>
 		return (
-		<table style={style}>
+		<table className="style-table">
           <thead>
             <tr>
             	<th>#</th>
-            	<th style={styleLeft}>Camper Name</th>
-            	<th style={(this.state.column === FIRST_COLUMN) ? styleSorted : {}} onClick={this.handleClick1}>
+            	<th className="style-left">Camper Name</th>
+            	<th className={(this.state.column === FIRST_COLUMN) ? "current-column" : ""} onClick={this.handleClick1}>
 							{title1}{descSign1}
 							</th>
-							<th style={(this.state.column === SECOND_COLUMN) ? styleSorted : {}} onClick={this.handleClick2}>
+							<th className={(this.state.column === SECOND_COLUMN) ? "current-column" : ""} onClick={this.handleClick2}>
 							{title2}{descSign2}
 							</th>
             </tr>

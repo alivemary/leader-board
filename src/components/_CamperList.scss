@@ -1,0 +1,15 @@
+.camper-list {
+  img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    border: $border;
+  }
+  .camper-column {
+    text-align: left;
+    width: 60%;
+  }
+  .data-column {
+    width: 18%;
+  }
+}

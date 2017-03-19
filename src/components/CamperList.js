@@ -11,26 +11,16 @@ export default class CamperList extends React.Component {
   }
 
 	render () {
-		let style={
-        textAlign: 'left',
-				width: '60%'
-    	};
-    let imgStyle={
-      heigth: '30px',
-      width: '30px',
-      marginRight: '10px',
-      border: '1px solid darkgrey'
-    }
-    let campersList=this.props.campersList.map((camper, index)=>{
-      return (<tr key={index}>
+		  let campersList=this.props.campersList.map((camper, index)=>{
+      return (<tr className="camper-list" key={index}>
                 <td>{index+1}</td>
-                <td style={style}>
+                <td className="camper-column">
                   <a href={'https://www.freecodecamp.com/'+camper.username}>
-                    <img style={imgStyle} src={camper.img} alt="UserPic"/>{camper.username}
+                    <img src={camper.img} alt="UserPic"/>{camper.username}
                   </a>
                 </td>
-                <td width="18%">{camper.recent}</td>
-                <td width="18%">{camper.alltime}</td>
+                <td className="data-column">{camper.recent}</td>
+                <td className="data-column">{camper.alltime}</td>
               </tr>);
     });
 		return (
